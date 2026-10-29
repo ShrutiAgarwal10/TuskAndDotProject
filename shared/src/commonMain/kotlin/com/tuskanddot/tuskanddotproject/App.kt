@@ -14,6 +14,10 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.jsonArray
+import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.json.jsonPrimitive
 import org.jetbrains.compose.resources.painterResource
 
 import tuskanddotproject.shared.generated.resources.Res
@@ -28,16 +32,8 @@ fun App() {
             val bytes = Res.readBytes("files/affirmations.json")
             val jsonString = bytes.decodeToString()
             println("AffirmationsApp: Loaded affirmations.json successfully. Content:")
-            /*println(jsonString)
 
-            val regex = Regex("""\{\s*"id"\s*:\s*"([^"]+)"\s*,\s*"topic"\s*:\s*"([^"]+)"\s*,\s*"text"\s*:\s*"([^"]+)"\s*\}""")
-            val matches = regex.findAll(jsonString)
-            println("AffirmationsApp: Parsed affirmations:")
-            for (match in matches) {
-                val (id, topic, text) = match.destructured
-                println("AffirmationsApp: [$id] ($topic): $text")
-            }*/
-            /*val jsonArray = Json.parseToJsonElement(jsonString).jsonArray
+            val jsonArray = Json.parseToJsonElement(jsonString).jsonArray
 
             jsonArray.forEach { item ->
                 val affirmation = item.jsonObject
@@ -46,7 +42,7 @@ fun App() {
                             "(${affirmation["topic"]!!.jsonPrimitive.content}): " +
                             affirmation["text"]!!.jsonPrimitive.content
                 )
-            }*/
+            }
         } catch (e: Exception) {
             println("AffirmationsApp: Error reading affirmations.json: ${e.message}")
             e.printStackTrace()
