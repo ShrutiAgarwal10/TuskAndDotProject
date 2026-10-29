@@ -74,6 +74,10 @@ kotlin {
             //Room DB
             implementation(libs.androidx.room.runtime)
             implementation(libs.androidx.sqlite.bundled)
+
+            // DataStore library
+            implementation(libs.androidx.datastore)
+            implementation(libs.datastore.preferences)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
