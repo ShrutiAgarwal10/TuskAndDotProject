@@ -5,16 +5,20 @@ A simple, calming affirmations app built with **Compose Multiplatform** for Andr
 ## Screenshots
 
 ### Android
-
-| Topic Selection | Affirmation Screen |
-|---|---|
+<p align="center">
+  <img src="screenshots/android/Screenshot_20261029_171907.png" width="200" title="All Topics">
+  <img src="screenshots/android/Screenshot_20261029_171921.png" width="200" title="Affirmation">
+  <img src="screenshots/android/Screenshot_20261029_171939.png" width="200" title="Favourites">
+</p>
 
 
 ### iOS
 
-| Topic Selection | Affirmation Screen |
-|---|---|
-
+<p align="center">
+  <img src="screenshots/iOS/Simulator%20Screenshot%20-%20iPhone%2017%20-%202026-10-29%20at%2017.21.45.png" width="200" title="All Topics">
+  <img src="screenshots/iOS/Simulator%20Screenshot%20-%20iPhone%2017%20-%202026-10-29%20at%2017.21.49.png" width="200" title="Affirmation">
+  <img src="screenshots/iOS/Simulator%20Screenshot%20-%20iPhone%2017%20-%202026-10-29%20at%2017.21.54.png" width="200" title="Favourites">
+</p>
 
 ## Features
 
