@@ -16,6 +16,7 @@ import com.tuskanddot.tuskanddotproject.ui.AffirmationScreen
 import com.tuskanddot.tuskanddotproject.ui.AffirmationViewModel
 import com.tuskanddot.tuskanddotproject.ui.Favourites
 import com.tuskanddot.tuskanddotproject.ui.TopicScreen
+import com.tuskanddot.tuskanddotproject.ui.theme.CalmColorScheme
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
@@ -55,7 +56,7 @@ fun App() {
         }
     }
 
-    MaterialTheme {
+    MaterialTheme(colorScheme = CalmColorScheme) {
         val navController = rememberNavController()
         val viewModel = koinViewModel<AffirmationViewModel>()
 
