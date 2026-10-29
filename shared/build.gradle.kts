@@ -62,6 +62,13 @@ kotlin {
             //Core Material Icons
             implementation(libs.material.icons.core)
 
+            //koin
+            implementation(project.dependencies.platform(libs.koin.bom))
+            implementation(libs.koin.core)
+            implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
+            implementation(libs.koin.compose.viewmodel.navigation)
+
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
