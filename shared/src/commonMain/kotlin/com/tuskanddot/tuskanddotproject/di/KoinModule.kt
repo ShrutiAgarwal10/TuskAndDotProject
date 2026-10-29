@@ -1,5 +1,6 @@
 package com.tuskanddot.tuskanddotproject.di
 
+import com.tuskanddot.tuskanddotproject.database.AppDatabase
 import org.koin.core.KoinApplication
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
@@ -16,6 +17,5 @@ expect val targetModule: Module
 
 val sharedModule = module {
 
-    //viewModel<LoginWithPhoneVM> { LoginWithPhoneVM() }
-
+    single { get<AppDatabase>().getAffirmationDao() }
 }
