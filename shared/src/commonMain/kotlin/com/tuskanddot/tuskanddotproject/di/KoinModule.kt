@@ -19,5 +19,5 @@ expect val targetModule: Module
 
 val sharedModule = module {
     single { get<AppDatabase>().getAffirmationDao() }
-    viewModel { AffirmationViewModel(get()) }
+    viewModel { AffirmationViewModel(get(), get()) }
 }

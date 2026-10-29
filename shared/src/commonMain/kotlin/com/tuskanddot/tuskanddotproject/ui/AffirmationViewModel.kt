@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tuskanddot.tuskanddotproject.data.entities.AffirmationEntity
 import com.tuskanddot.tuskanddotproject.database.dao.AffirmationDao
+import com.tuskanddot.tuskanddotproject.prefs.PreferenceKeys
+import com.tuskanddot.tuskanddotproject.prefs.UserPreferences
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,13 +19,20 @@ data class AffirmationUiState(
     val currentAffirmation: AffirmationEntity? = null
 )
 
-class AffirmationViewModel(private val dao: AffirmationDao) : ViewModel() {
+class AffirmationViewModel(
+    private val dao: AffirmationDao,
+    private val userPreferences: UserPreferences
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow(AffirmationUiState())
     val uiState: StateFlow<AffirmationUiState> = _uiState.asStateFlow()
 
+    private val _favoriteAffirmations = MutableStateFlow<List<AffirmationEntity>>(emptyList())
+    val favoriteAffirmations: StateFlow<List<AffirmationEntity>> = _favoriteAffirmations.asStateFlow()
+
     init {
         fetchAffirmations()
+        fetchFavorites()
     }
 
     private fun fetchAffirmations() {
@@ -41,6 +50,14 @@ class AffirmationViewModel(private val dao: AffirmationDao) : ViewModel() {
                     topics = listOf("All") + topics,
                     currentAffirmation = currentAff
                 )
+            }
+        }
+    }
+
+    private fun fetchFavorites() {
+        viewModelScope.launch {
+            dao.getFavorites().collect { favs ->
+                _favoriteAffirmations.value = favs
             }
         }
     }
@@ -74,6 +91,8 @@ class AffirmationViewModel(private val dao: AffirmationDao) : ViewModel() {
         viewModelScope.launch {
             val updatedFavorite = !affirmation.isFavorite
             dao.updateFavorite(affirmation.id, updatedFavorite)
+            userPreferences.savePreference("${PreferenceKeys.FAV}_${affirmation.id}", updatedFavorite)
+
             val updatedList = _uiState.value.affirmations.map {
                 if (it.id == affirmation.id) it.copy(isFavorite = updatedFavorite) else it
             }

@@ -14,6 +14,7 @@ import com.tuskanddot.tuskanddotproject.data.entities.AffirmationEntity
 import com.tuskanddot.tuskanddotproject.database.dao.AffirmationDao
 import com.tuskanddot.tuskanddotproject.ui.AffirmationScreen
 import com.tuskanddot.tuskanddotproject.ui.AffirmationViewModel
+import com.tuskanddot.tuskanddotproject.ui.Favourites
 import com.tuskanddot.tuskanddotproject.ui.TopicScreen
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonArray
@@ -68,6 +69,9 @@ fun App() {
                     viewModel = viewModel,
                     onTopicClick = { topic ->
                         navController.navigate("affirmations/$topic")
+                    },
+                    onFavoritesClick = {
+                        navController.navigate("favorites")
                     }
                 )
             }
@@ -79,6 +83,12 @@ fun App() {
                 AffirmationScreen(
                     viewModel = viewModel,
                     initialTopic = topic,
+                    onBackClick = { navController.popBackStack() }
+                )
+            }
+            composable("favorites") {
+                Favourites(
+                    viewModel = viewModel,
                     onBackClick = { navController.popBackStack() }
                 )
             }
