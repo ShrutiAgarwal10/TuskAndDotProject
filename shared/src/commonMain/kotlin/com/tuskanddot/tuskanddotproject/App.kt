@@ -14,11 +14,14 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.tuskanddot.tuskanddotproject.data.entities.AffirmationEntity
+import com.tuskanddot.tuskanddotproject.database.dao.AffirmationDao
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import org.jetbrains.compose.resources.painterResource
+import org.koin.compose.koinInject
 
 import tuskanddotproject.shared.generated.resources.Res
 import tuskanddotproject.shared.generated.resources.compose_multiplatform
@@ -27,13 +30,32 @@ import tuskanddotproject.shared.generated.resources.compose_multiplatform
 @Composable
 @Preview
 fun App() {
+    val dao = koinInject<AffirmationDao>()
     LaunchedEffect(Unit) {
+
         try {
             val bytes = Res.readBytes("files/affirmations.json")
             val jsonString = bytes.decodeToString()
+            val jsonArray = Json.parseToJsonElement(jsonString).jsonArray
+
             println("AffirmationsApp: Loaded affirmations.json successfully. Content:")
 
-            val jsonArray = Json.parseToJsonElement(jsonString).jsonArray
+            val affirmations = jsonArray.map { item ->
+                val json = item.jsonObject
+
+                AffirmationEntity(
+                    id = json["id"]!!.jsonPrimitive.content,
+                    topic = json["topic"]!!.jsonPrimitive.content,
+                    text = json["text"]!!.jsonPrimitive.content,
+                    isFavorite = false
+                )
+            }
+
+            dao.insertAll(affirmations)
+
+            println("Inserted ${affirmations.size} affirmations into Room")
+
+            /*val jsonArray = Json.parseToJsonElement(jsonString).jsonArray
 
             jsonArray.forEach { item ->
                 val affirmation = item.jsonObject
@@ -42,7 +64,7 @@ fun App() {
                             "(${affirmation["topic"]!!.jsonPrimitive.content}): " +
                             affirmation["text"]!!.jsonPrimitive.content
                 )
-            }
+            }*/
         } catch (e: Exception) {
             println("AffirmationsApp: Error reading affirmations.json: ${e.message}")
             e.printStackTrace()
