@@ -1,31 +1,66 @@
-This is a Kotlin Multiplatform project targeting Android, iOS.
+# Affirmations App
 
-* [/iosApp](./iosApp/iosApp) contains an iOS application. Even if you’re sharing your UI with Compose Multiplatform,
-  you need this entry point for your iOS app. This is also where you should add SwiftUI code for your project.
+A simple, calming affirmations app built with **Compose Multiplatform** for Android and iOS. Choose a topic, discover a random affirmation, and save your favorites for later.
 
-* [/shared](./shared/src) is for code that will be shared across your Compose Multiplatform applications.
-  It contains several subfolders:
-  - [commonMain](./shared/src/commonMain/kotlin) is for code that’s common for all targets.
-  - Other folders are for Kotlin code that will be compiled for only the platform indicated in the folder name.
-    For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
-    the [iosMain](./shared/src/iosMain/kotlin) folder would be the right place for such calls.
-    Similarly, if you want to edit the Desktop (JVM) specific part, the [jvmMain](./shared/src/jvmMain/kotlin)
-    folder is the appropriate location.
+## Screenshots
 
-### Running the apps
+### Android
 
-Use the run configurations provided by the run widget in your IDE's toolbar. You can also use these commands and options:
+| Topic Selection | Affirmation Screen |
+|---|---|
 
-- Android app: `./gradlew :androidApp:assembleDebug`
-- iOS app: open the [/iosApp](./iosApp) directory in Xcode and run it from there.
 
-### Running tests
+### iOS
 
-Use the run button in your IDE's editor gutter, or run tests using Gradle tasks:
+| Topic Selection | Affirmation Screen |
+|---|---|
 
-- Android tests: `./gradlew :shared:testAndroidHostTest`
-- iOS tests: `./gradlew :shared:iosSimulatorArm64Test`
 
----
+## Features
 
-Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)…
+- **Topic selection:** Choose from Confidence, Calm, and Motivation.
+- **Random affirmations:** Discover an affirmation from your selected topic.
+- **Quick topic switching:** Switch topics using the filters at the top of the affirmation screen.
+- **Favorites:** Save and unsave affirmations.
+- **Local persistence:** Store affirmation data and favorite status locally using Room.
+- **Cross-platform UI:** Share UI and application logic between Android and iOS.
+- **Offline-first:** No backend or network connection is required for the core experience.
+
+## Tech Stack
+
+- **Language:** Kotlin
+- **UI:** Compose Multiplatform
+- **Database:** Room
+- **Data source:** Local JSON asset
+- **Architecture:** Shared UI and business logic with platform-specific entry points
+
+## Getting Started
+
+### Run on Android
+
+1. Clone the repository.
+2. Open the project in Android Studio.
+3. Allow Gradle synchronization to finish.
+4. Select the Android run configuration.
+5. Run the app on an emulator or physical device.
+
+### Run on iOS
+
+1. Open the project in Android Studio and synchronize Gradle.
+2. Open the generated or configured iOS project in Xcode, typically under `iosApp/`.
+3. Select an iOS simulator or connected device.
+4. Build and run the iOS app.
+
+> Exact commands and run configurations depend on the Compose Multiplatform project template used.
+
+## How It Works
+
+1. The app loads the affirmation dataset from a local JSON resource.
+2. The data is inserted into Room when the database needs initial population.
+3. The user selects a topic on the home screen.
+4. A random affirmation from that topic is displayed.
+5. The user can switch topics, request another affirmation, or toggle its favorite status.
+6. Favorite status is stored locally and retained between app launches.
+
+
+Built with ❤️ using Kotlin and Compose Multiplatform.
